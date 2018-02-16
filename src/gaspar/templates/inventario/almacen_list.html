@@ -1,0 +1,53 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <p>
+            <a href="{% url 'almacen_create' %}" class="btn btn-outline-primary">Crear Almacen</a>
+            <a href="/inventario/reporte/almacen/" class="btn btn-outline-primary">Reporte</a>
+        </p>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>DIRECCION</th>
+                <th>Estado</th>
+                <th>ACCION</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for almacen in object_list %}
+                <tr>
+                    <td>{{ almacen.cod }}</td>
+                    <td>{{ almacen.nombre }}</td>
+                    <td>{{ almacen.direccion }}</td>
+                    <td><span class="badge badge-success">{{ almacen.estado }}</span></td>
+                    <td>
+                        <a href="{% url 'almacen_update' almacen.cod %}" class="btn btn-sm btn-secondary">Editar</a>
+                        <a href="{% url 'almacen_delete' almacen.cod %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div style="float:right;">
+            <ul class="pagination">
+                <li class="page-item">
+                    {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+                    {% endif %}
+                </li>
+                <li class="page-item">
+                    {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

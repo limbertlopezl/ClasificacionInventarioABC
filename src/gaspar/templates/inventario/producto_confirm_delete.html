@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block body %}
+<div class="container">
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>{{ producto }}</h2>
+        <p class="lead">
+            ¿Estas seguro quieres eliminar este Producto?
+        </p>
+        <button name="confirm" type="submit" class="btn btn-danger">Si, estoy seguro</button>
+        <a href="{% url 'producto_landing' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+</div>
+
+{% endblock %}

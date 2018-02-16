@@ -1,0 +1,71 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/">INVENTARIO LOMERCO</a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+
+
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">ABC</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="/abc/">Costo</a>
+                        <a class="dropdown-item" href="/abc/valor/">Valor</a>
+                        <!--<a class="dropdown-item" href="/abc/almacen/">Almacenes</a> -->
+                        <a class="dropdown-item" href="/abc/demanda/">Demanda</a>
+                        <a class="dropdown-item" href="/abc/utilidad/">Utilidad</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Comprobantes</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="{% url 'ingreso_landing' %}">Ingresos</a>
+                        <a class="dropdown-item" href="{% url 'salida_landing' %}">Salidas</a>
+                        <a class="dropdown-item" href="{% url 'traspaso_landing' %}">Traspasos</a>
+                        <a class="dropdown-item" href="{% url 'stock_landing' %}"></a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Inventario</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="{% url 'almacen_landing' %}">Almacen</a>
+                        <a class="dropdown-item" href="{% url 'producto_landing' %}">Producto</a>
+                        <a class="dropdown-item" href="{% url 'categoria_landing' %}">Categoria</a>
+                        <a class="dropdown-item" href="{% url 'stock_landing' %}">Stock</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">Usuarios</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="{% url 'cliente_landing' %}">Cliente</a>
+                        <a class="dropdown-item" href="{% url 'proveedor_landing' %}">Proveedor</a>
+                    </div>
+                </li>
+            {% endif %}
+
+
+        </ul>
+
+        <div class="">
+            {% if user.is_anonymous %}
+                <a href="{% url 'login' %}" class="btn btn-primary">Ingresar</a>
+                <a href="{% url 'user_registration' %}" class="btn btn-primary">Registrarse</a>
+            {% else %}
+                <a href="{% url 'user_settings' %}" class="btn btn-primary">Hola, {{ user }}</a>
+                <a href="{% url 'logout' %}" class="btn btn-primary">Salir</a>
+            {% endif %}
+        </div>
+
+    </div>
+</nav>

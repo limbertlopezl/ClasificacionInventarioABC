@@ -1,0 +1,35 @@
+version: "2"
+
+services:
+    database:
+        image: postgres:9.6
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+
+    backend:
+        build: .
+        #command: python src/manage.py runserver 0.0.0.0:8000
+        ports:
+            - 8000:8000
+        links:
+            - database:database
+        volumes:
+            - .:/app
+            - pyenv:/python
+
+        environment:
+            DJANGO_DATABASE_HOST: database
+            DJANGO_DATABASE_USER: postgres
+            DJANGO_DATABASE_PASSWORD: postgres
+            DJANGO_DATABASE_NAME: inventory_master
+
+    frontend:
+        image: vevende/node6:latest
+        command: webpack -d --watch
+        tty: true
+        volumes:
+            - ./src/frontend:/app
+
+volumes:
+    pyenv:

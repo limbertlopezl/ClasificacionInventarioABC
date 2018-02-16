@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+
+<div class="container">
+    {% if form.instance.pk %}
+    {%include 'forms/form.html' with action="Editar"%}
+    <table class="table table-sm table-bordered">
+        {% for almacen in almacenes %}
+        <tbody>
+        <tr>
+            <td>{{ almacen.cod}}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    {%include 'forms/form.html' with action="Crear"%}
+    {% endif%}
+</div>
+
+{% endblock %}

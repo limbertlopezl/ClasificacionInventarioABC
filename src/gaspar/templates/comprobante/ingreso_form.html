@@ -1,0 +1,37 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+
+    <div class="container">
+        {% if form.instance.pk %}
+            {% include 'forms/form.html' with action="Editar" %}
+            <br>
+            <div style="text-align: center;">
+                <h3>Detalles de Ingresos</h3>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ingreso in form.instance.detalle_ingreso.all %}
+                    <tr>
+                        <td>{{ ingreso.cod_producto }}</td>
+                        <td>{{ ingreso.precio }}</td>
+                        <td>{{ ingreso.cantidad }}</td>
+                        <td>{{ ingreso.total }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {% include 'forms/form.html' with action="Crear" %}
+        {% endif %}
+    </div>
+
+{% endblock %}

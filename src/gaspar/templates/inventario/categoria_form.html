@@ -1,0 +1,22 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+
+<div class="container">
+    {% if form.instance.pk %}
+    {%include 'forms/form.html' with action="Editar"%}
+    <table class="table table-sm table-bordered">
+        {% for categoria in categorias %}
+        <tbody>
+        <tr>
+            <td>{{ categoria.cod}}</td>
+        </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    {%include 'forms/form.html' with action="Crear"%}
+    {% endif%}
+</div>
+
+{% endblock %}

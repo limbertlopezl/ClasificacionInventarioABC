@@ -1,0 +1,32 @@
+{% extends 'registration/base.html' %}
+
+{% load widget_tweaks %}
+
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    {% for field, error in form.errors.items %}
+    <div class="alert alert-danger">{{error}}</div>
+    {% endfor %}
+
+    <div class="form-group">
+        <label>Nombre de usuario</label>
+        {% render_field form.username class+="form-control" %}
+        <div class="form-control-feedback">{{ form.username.errors }}</div>
+    </div>
+
+    <div class="form-group">
+        <label>Contraseña</label>
+        {% render_field form.password class+="form-control" %}
+        <div class="form-control-feedback">{{ form.password.errors }}</div>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary">Ingresar</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block side %}
+<h2>Bienvenido</h2>
+<p>Utiliza tu usuario y contraseña para ingresar</p>
+{% endblock %}

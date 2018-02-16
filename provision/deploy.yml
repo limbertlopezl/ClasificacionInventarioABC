@@ -1,0 +1,80 @@
+- hosts: nombrehots
+  become: yes
+  become_user: tusuario-servidor
+  gather_facts: no
+
+  vars:
+      TELEGRAM_CHAT_ID: "{{ lookup('env', 'TELEGRAM_CHAT_ID') }}"
+      CI_REGISTRY: "{{ lookup('env', 'CI_REGISTRY') }}"
+      CI_PIPELINE_ID: "{{ lookup('env', 'CI_PIPELINE_ID') }}"
+      CI_PROJECT_URL: "{{ lookup('env', 'CI_PROJECT_URL') }}"
+      GITLAB_USER_EMAIL: "{{ lookup('env', 'GITLAB_USER_EMAIL') }}"
+
+  tasks:
+
+      - name: send a message to chat in playbook
+        telegram:
+          token: 'tutoken'
+          chat_id: -248676181
+          msg: Se esta Desplegando una nueva version
+
+      - name: Pull latest image
+        command: docker pull registry.gitlab.com/limbert/inventory-dev:latest
+
+      - name: Create database container
+        docker_container:
+            name: postgres
+            image: postgres:9.6
+            restart_policy: always
+            state: started
+            env:
+                POSTGRES_USER: postgres
+                POSTGRES_PASSWORD: postgres
+
+      - name: Check database exists
+        command: >
+            docker exec postgres psql -U postgres -c "\c inventory_master"
+        ignore_errors: true
+        register: database
+
+      - name: Create database if not exists
+        command: >
+            docker exec postgres psql -U postgres -c "create database inventory_master"
+        when: database|failed
+
+
+      - name: Recreate container
+        docker_container:
+            name: tudominio
+            image: registry.gitlab.com/limbert/inventory-dev:latest
+            ports:
+                - 8000:8000
+            restart_policy: always
+            recreate: yes
+            links:
+                - postgres:database
+            env:
+                DJANGO_ALLOWED_HOSTS: 'tudominio'
+                DJANGO_DATABASE_NAME: inventory_master
+                DJANGO_DATABASE_HOST: database
+                DJANGO_DATABASE_USER: postgres
+
+      - name: Run Migrations
+        command: docker exec inventory.limbertlopez.com python src/manage.py migrate --noinput
+        tags:
+            - migrate
+        register: estado
+
+      - name: send a message to chat in playbook
+        telegram:
+          token: 'tu-token-telegram'
+          succeed chat_id: -248676181
+          msg: Ocurrio un Error en el Despligue al subir una nueva version - [Usuario]({{ GITLAB_USER_EMAIL }})- [Commit]({{ CI_PIPELINE_ID }})- [Detalle]({{ CI_PROJECT_URL }})
+        when: estado|failed
+
+      - name: send a message to chat in playbook
+        telegram:
+          token: 'tu-token-telegram'
+          chat_id: -248676181
+          msg: Se Desplego una nueva version Correctamente - [Usuario]({{ GITLAB_USER_EMAIL }})
+              - [Commit]({{ CI_PIPELINE_ID }}) - [Detalle]({{ CI_PROJECT_URL }})setup.cfg

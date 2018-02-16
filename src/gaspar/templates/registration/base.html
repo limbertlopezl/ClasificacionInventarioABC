@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-sm-4">
+            {% block content %} {% endblock %}
+        </div>
+        <div class="col-sm-4">
+            {% block side %} {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

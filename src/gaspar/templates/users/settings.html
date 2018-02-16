@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-8">
+            <h2>Hola, {{ user.first_name }}</h2>
+            {% include 'forms/form.html' with action="Guardar" %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

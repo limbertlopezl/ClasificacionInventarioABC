@@ -1,0 +1,97 @@
+{% extends 'layouts/base.html' %}
+{% load static from staticfiles %}
+{% block body %}
+    <style>
+        .display-1 {
+            font-size: 3rem;
+        }
+
+        .titulo {
+            padding-top: 1rem;
+        }
+
+        #contenido-dasboard {
+            padding-top: 1rem;
+        }
+
+        .item-dasboard {
+            padding-bottom: 2rem;
+        }
+    </style>
+    <div class="container">
+        <div class="titulo">
+            <h2 class="page-titulo">Dashboard</h2>
+        </div>
+        <!--- Dashboard Ventas-->
+        <div id="contenido-dasboard" class="row">
+            <div class="col-xl-4 col-lg-6 item-dasboard"><a href="#" style="text-decoration: none">
+                <div class="card card-inverse card-success">
+                    <div class="card-block bg-danger">
+                        <div class="rotate">
+                            <i class="fa fa-money fa-5x"></i>
+                        </div>
+                        <h6 class="text-uppercase">VENTAS</h6>
+                        <h2 class="display-1">{{ ventas.ventas_anual }}</h2>
+                    </div>
+                </div>
+            </a>
+            </div>
+
+            <!--- Dashboard Compras-->
+            <div class="col-xl-4 col-lg-6 item-dasboard"><a href="#" style="text-decoration: none">
+                <div class="card card-inverse card-success">
+                    <div class="card-block bg-success">
+                        <div class="rotate">
+                            <i class="fa fa-cart-arrow-down fa-5x"></i>
+                        </div>
+                        <h6 class="text-uppercase">COMPRAS</h6>
+                        <h1 class="display-1">{{ compras.compra_anual }}</h1>
+                    </div>
+                </div>
+            </a>
+            </div>
+            <!--- Dashboard PRODUCTOS-->
+            <div class="col-xl-4 col-lg-6 item-dasboard"><a href="#" style="text-decoration: none">
+                <div class="card card-inverse card-warning">
+                    <div class="card-block bg-warning">
+                        <div class="rotate">
+                            <i class="fa fa-tasks fa-5x"></i>
+                        </div>
+                        <h6 class="text-uppercase">PRODUCTOS</h6>
+                        <h1 class="display-1">{{ productos }}</h1>
+                    </div>
+                </div>
+            </a>
+            </div>
+            <!--- Dashboard Proveedores-->
+            <div class="col-xl-4 col-lg-6 item-dasboard"><a href="#" style="text-decoration: none">
+                <div class="card card-inverse card-info">
+                    <div class="card-block bg-info">
+                        <div class="rotate">
+                            <i class="fa fa-cubes fa-5x"></i>
+                        </div>
+                        <h6 class="text-uppercase">PROVEEDORES</h6>
+                        <h1 class="display-1">{{ proveedores }}</h1>
+                    </div>
+                </div>
+            </a>
+            </div>
+
+            <!--- Dashboard Clientes-->
+            <div class="col-xl-4 col-lg-6 item-dasboard"><a href="#" style="text-decoration: none">
+                <div class="card card-inverse card-success">
+                    <div class="card-block bg-primary">
+                        <div class="rotate">
+                            <i class="fa fa-users fa-5x"></i>
+                        </div>
+                        <h6 class="text-uppercase">CLIENTES</h6>
+                        <h1 class="display-1">{{ clientes }}</h1>
+                    </div>
+                </div>
+            </a>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}

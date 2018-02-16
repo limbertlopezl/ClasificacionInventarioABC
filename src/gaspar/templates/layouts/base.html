@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+    {% load static from staticfiles %}
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}LOMERCO{% endblock %}</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{% static 'css/main.css' %}" rel="stylesheet"/>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
+            integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+            integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+            crossorigin="anonymous"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"
+          rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>-->
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+    <link href="https://nightly.datatables.net/buttons/css/buttons.dataTables.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- Libreirias para los Botones de Exportar-->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+    <script src="https://nightly.datatables.net/buttons/js/dataTables.buttons.min.js"></script>
+    <script src="https://nightly.datatables.net/buttons/js/buttons.flash.min.js"></script>
+    <!-- Libreirias para el Reporte PDF-->
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.27/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
+
+    <style>
+        path {
+            stroke: #fff;
+        }
+
+        path:hover {
+            opacity: 0.9;
+        }
+
+        rect:hover {
+            fill: blue;
+        }
+
+        .axis {
+            font: 10px sans-serif;
+        }
+
+        .legend tr {
+            border-bottom: 1px solid grey;
+        }
+
+        .legend tr:first-child {
+            border-top: 1px solid grey;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        .legend {
+            margin-bottom: 76px;
+            display: inline-block;
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+
+        .legend td {
+            padding: 4px 5px;
+            vertical-align: bottom;
+        }
+
+        .legendFreq, .legendPerc {
+            align: right;
+            width: 50px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        message: 'Reporte Generado el 23/06/2017'
+                    },
+                    'excel'
+                ]
+            });
+
+        });
+        $(document).ready(function () {
+            $('#example2').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        message: 'Reporte Generado el 23/06/2017'
+                    },
+                    'excel'
+                ]
+            });
+
+        });
+        $(document).ready(function () {
+            $('#example3').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        message: 'Reporte Generado el 23/06/2017'
+                    },
+                    'excel'
+                ]
+            });
+
+        });
+        $(document).ready(function () {
+            $('#example4').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'pdfHtml5',
+                        message: 'Reporte Generado el 23/06/2017'
+                    },
+                    'excel'
+                ]
+            });
+        });
+    </script>
+
+</head>
+<body>
+{% include 'partials/header2.html' %}
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% block body %}
+{% endblock %}
+<script src="{% static 'main.js' %}"></script>
+</body>
+</html>

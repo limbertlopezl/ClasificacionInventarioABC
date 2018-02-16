@@ -1,0 +1,40 @@
+image: vevende/ci:latest
+
+stages:
+    - build
+    - tests
+    - deploy
+
+build:
+    stage: build
+    services:
+      - docker:dind
+    script:
+      - docker-compose run --rm frontend npm run build
+      - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+      - docker build -t registry.gitlab.com/limbert/inventory-dev:latest .
+      - docker push registry.gitlab.com/limbert/inventory-dev:latest
+    cache:
+        paths:
+            - src/frontend/node_modules
+            - src/frontend/.cache
+tests:
+    stage: tests
+    services:
+      - docker:dind
+    script:
+      - docker-compose run --rm backend python src/manage.py test src/gaspar/
+
+production:
+    stage: deploy
+    variables:
+      DEPLOY_URL: tudominio
+    environment:
+      name: production
+      url: tudominio
+    only:
+      - master
+    script:
+        - eval $(ssh-agent -s)
+        - ssh-add <(echo "$SSH_PRIVATE_KEY")
+        - ansible-playbook -vvv -i provision/inventory.ini provision/deploy.yml

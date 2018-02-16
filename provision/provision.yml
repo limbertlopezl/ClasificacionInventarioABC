@@ -1,0 +1,46 @@
+- hosts: nombre_host
+  become: yes
+
+  tasks:
+      - name: Install common packages
+        apt: "name={{item}} state=present update_cache=yes"
+        with_items:
+            - htop
+            - tree
+            - tmux
+            - nginx
+            - python-pip
+
+      - name: Install python common packages
+        pip: name=docker-py state=present
+
+      - name: Remove unwanted packages
+        apt: "name={{item}} state=absent update_cache=yes"
+        with_items:
+            - snapd
+
+      - name: Install docker repository
+        apt_repository:
+            repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
+            state: present
+
+      - name: Install gpg key for docker
+        apt_key:
+            id: 0EBFCD88
+            url: "https://download.docker.com/linux/ubuntu/gpg"
+            state: present
+
+      - name: Install docker
+        apt: "name={{item}} state=present update_cache=yes"
+        with_items:
+            - docker-ce
+      - name: Install nginx vhost
+        copy:
+            src: etc/vhost.conf
+            dest: /etc/nginx/sites-enabled/default
+            group: root
+            owner: root
+        tags:
+            - nginx
+
+

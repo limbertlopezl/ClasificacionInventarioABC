@@ -1,0 +1,58 @@
+{% extends 'layouts/base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <p>
+            <a href="{% url 'ingreso_create' %}" class="btn btn-outline-primary">Crear Ingreso</a>
+        </p>
+        <table class="table table-condensed">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>PROVEEDOR</th>
+                <th>MONTO TOTAL</th>
+                <th>ALMACEN</th>
+                <th>USUARIO</th>
+                <th>FECHA</th>
+                <th>ESTADO</th>
+                <th>ACCIONES</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for ingreso in object_list %}
+                <tr>
+                    <td>{{ ingreso.nro }}</td>
+                    <td>{{ ingreso.cod_proveedor }}</td>
+                    <td>{{ ingreso.get_total }}</td>
+                    <td>{{ ingreso.cod_almacen }}</td>
+                    <td>{{ ingreso.cod_usuario }}</td>
+                    <td>{{ ingreso.fecha }}</td>
+                    <td><span class="badge badge-success">{{ ingreso.estado }}</span></td>
+                    <td>
+                        <a href="{% url 'ingreso_update' ingreso.nro %}" class="btn btn-sm btn-secondary">Ver</a>
+                        <a href="{% url 'ingreso_delete' ingreso.nro %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div style="float:right;">
+            <ul class="pagination">
+                <li class="page-item">
+                    {% if page_obj.has_previous %}
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
+                    {% endif %}
+                </li>
+                <li class="page-item">
+                    {% if page_obj.has_next %}
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
+
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
